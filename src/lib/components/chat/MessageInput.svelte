@@ -424,54 +424,6 @@
 								</div>
 							{/if}
 
-							{#if webSearchEnabled || ($config?.features?.enable_web_search && ($settings?.webSearch ?? false)) === 'always'}
-								<div class="flex items-center justify-between w-full">
-									<div class="flex items-center gap-2.5 text-sm dark:text-gray-500">
-										<div class="pl-1">
-											<span class="relative flex size-2">
-												<span
-													class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"
-												/>
-												<span class="relative inline-flex rounded-full size-2 bg-blue-500" />
-											</span>
-										</div>
-										<div class=" translate-y-[0.5px]">{$i18n.t('Search the internet')}</div>
-									</div>
-								</div>
-							{/if}
-
-							{#if imageGenerationEnabled}
-								<div class="flex items-center justify-between w-full">
-									<div class="flex items-center gap-2.5 text-sm dark:text-gray-500">
-										<div class="pl-1">
-											<span class="relative flex size-2">
-												<span
-													class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"
-												/>
-												<span class="relative inline-flex rounded-full size-2 bg-teal-500" />
-											</span>
-										</div>
-										<div class=" translate-y-[0.5px]">{$i18n.t('Generate an image')}</div>
-									</div>
-								</div>
-							{/if}
-
-							{#if codeInterpreterEnabled}
-								<div class="flex items-center justify-between w-full">
-									<div class="flex items-center gap-2.5 text-sm dark:text-gray-500">
-										<div class="pl-1">
-											<span class="relative flex size-2">
-												<span
-													class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-												/>
-												<span class="relative inline-flex rounded-full size-2 bg-green-500" />
-											</span>
-										</div>
-										<div class=" translate-y-[0.5px]">{$i18n.t('Execute code for analysis')}</div>
-									</div>
-								</div>
-							{/if}
-
 							{#if atSelectedModel !== undefined}
 								<div class="flex items-center justify-between w-full">
 									<div class="pl-[1px] flex items-center gap-2 text-sm dark:text-gray-500">
@@ -583,7 +535,7 @@
 							}}
 						>
 							<div
-								class="flex-1 flex flex-col relative w-full rounded-3xl px-1 bg-gray-600/5 dark:bg-gray-400/5 dark:text-gray-100"
+								class="flex-1 flex flex-col relative w-full shadow-lg rounded-3xl border border-gray-100 dark:border-gray-850 hover:border-gray-200 focus-within:border-gray-200 hover:dark:border-gray-800 focus-within:dark:border-gray-800 transition px-1 bg-white/90 dark:bg-gray-400/5 dark:text-gray-100"
 								dir={$settings?.chatDirection ?? 'LTR'}
 							>
 								{#if files.length > 0}
@@ -694,7 +646,8 @@
 														))}
 												placeholder={placeholder ? placeholder : $i18n.t('Send a Message')}
 												largeTextAsFile={$settings?.largeTextAsFile ?? false}
-												autocomplete={$config?.features.enable_autocomplete_generation}
+												autocomplete={$config?.features?.enable_autocomplete_generation &&
+													($settings?.promptAutocomplete ?? false)}
 												generateAutoCompletion={async (text) => {
 													if (selectedModelIds.length === 0 || !selectedModelIds.at(0)) {
 														toast.error($i18n.t('Please select a model first.'));
@@ -902,7 +855,6 @@
 											on:keydown={async (e) => {
 												const isCtrlPressed = e.ctrlKey || e.metaKey; // metaKey is for Cmd key on Mac
 
-												console.log('keydown', e);
 												const commandsContainerElement =
 													document.getElementById('commands-container');
 
@@ -1244,7 +1196,7 @@
 												})}
 											>
 												<button
-													class="translate-y-[1.5px] flex gap-1 items-center text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 transition rounded-lg px-1.5 py-0.5 mr-0.5 self-center border border-gray-100 dark:border-gray-800"
+													class="translate-y-[1.5px] flex gap-1 items-center text-gray-600 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 rounded-lg px-1.5 py-0.5 mr-0.5 self-center border border-gray-100 dark:border-gray-800 transition"
 													aria-label="Available Tool Servers"
 													type="button"
 													on:click={() => {

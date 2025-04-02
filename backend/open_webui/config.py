@@ -980,6 +980,35 @@ USER_PERMISSIONS_WORKSPACE_TOOLS_ACCESS = (
     os.environ.get("USER_PERMISSIONS_WORKSPACE_TOOLS_ACCESS", "False").lower() == "true"
 )
 
+USER_PERMISSIONS_WORKSPACE_MODELS_ALLOW_PUBLIC_SHARING = (
+    os.environ.get(
+        "USER_PERMISSIONS_WORKSPACE_MODELS_ALLOW_PUBLIC_SHARING", "False"
+    ).lower()
+    == "true"
+)
+
+USER_PERMISSIONS_WORKSPACE_KNOWLEDGE_ALLOW_PUBLIC_SHARING = (
+    os.environ.get(
+        "USER_PERMISSIONS_WORKSPACE_KNOWLEDGE_ALLOW_PUBLIC_SHARING", "False"
+    ).lower()
+    == "true"
+)
+
+USER_PERMISSIONS_WORKSPACE_PROMPTS_ALLOW_PUBLIC_SHARING = (
+    os.environ.get(
+        "USER_PERMISSIONS_WORKSPACE_PROMPTS_ALLOW_PUBLIC_SHARING", "False"
+    ).lower()
+    == "true"
+)
+
+USER_PERMISSIONS_WORKSPACE_TOOLS_ALLOW_PUBLIC_SHARING = (
+    os.environ.get(
+        "USER_PERMISSIONS_WORKSPACE_TOOLS_ALLOW_PUBLIC_SHARING", "False"
+    ).lower()
+    == "true"
+)
+
+
 USER_PERMISSIONS_CHAT_CONTROLS = (
     os.environ.get("USER_PERMISSIONS_CHAT_CONTROLS", "True").lower() == "true"
 )
@@ -998,6 +1027,11 @@ USER_PERMISSIONS_CHAT_EDIT = (
 
 USER_PERMISSIONS_CHAT_TEMPORARY = (
     os.environ.get("USER_PERMISSIONS_CHAT_TEMPORARY", "True").lower() == "true"
+)
+
+USER_PERMISSIONS_CHAT_TEMPORARY_ENFORCED = (
+    os.environ.get("USER_PERMISSIONS_CHAT_TEMPORARY_ENFORCED", "False").lower()
+    == "true"
 )
 
 USER_PERMISSIONS_FEATURES_WEB_SEARCH = (
@@ -1022,12 +1056,19 @@ DEFAULT_USER_PERMISSIONS = {
         "prompts": USER_PERMISSIONS_WORKSPACE_PROMPTS_ACCESS,
         "tools": USER_PERMISSIONS_WORKSPACE_TOOLS_ACCESS,
     },
+    "sharing": {
+        "public_models": USER_PERMISSIONS_WORKSPACE_MODELS_ALLOW_PUBLIC_SHARING,
+        "public_knowledge": USER_PERMISSIONS_WORKSPACE_KNOWLEDGE_ALLOW_PUBLIC_SHARING,
+        "public_prompts": USER_PERMISSIONS_WORKSPACE_PROMPTS_ALLOW_PUBLIC_SHARING,
+        "public_tools": USER_PERMISSIONS_WORKSPACE_TOOLS_ALLOW_PUBLIC_SHARING,
+    },
     "chat": {
         "controls": USER_PERMISSIONS_CHAT_CONTROLS,
         "file_upload": USER_PERMISSIONS_CHAT_FILE_UPLOAD,
         "delete": USER_PERMISSIONS_CHAT_DELETE,
         "edit": USER_PERMISSIONS_CHAT_EDIT,
         "temporary": USER_PERMISSIONS_CHAT_TEMPORARY,
+        "temporary_enforced": USER_PERMISSIONS_CHAT_TEMPORARY_ENFORCED,
     },
     "features": {
         "web_search": USER_PERMISSIONS_FEATURES_WEB_SEARCH,
@@ -1090,6 +1131,12 @@ ENABLE_MESSAGE_RATING = PersistentConfig(
     "ENABLE_MESSAGE_RATING",
     "ui.enable_message_rating",
     os.environ.get("ENABLE_MESSAGE_RATING", "True").lower() == "true",
+)
+
+ENABLE_USER_WEBHOOKS = PersistentConfig(
+    "ENABLE_USER_WEBHOOKS",
+    "ui.enable_user_webhooks",
+    os.environ.get("ENABLE_USER_WEBHOOKS", "True").lower() == "true",
 )
 
 
@@ -1775,6 +1822,14 @@ RAG_EMBEDDING_BATCH_SIZE = PersistentConfig(
         os.environ.get("RAG_EMBEDDING_BATCH_SIZE")
         or os.environ.get("RAG_EMBEDDING_OPENAI_BATCH_SIZE", "1")
     ),
+)
+
+RAG_EMBEDDING_QUERY_PREFIX = os.environ.get("RAG_EMBEDDING_QUERY_PREFIX", None)
+
+RAG_EMBEDDING_CONTENT_PREFIX = os.environ.get("RAG_EMBEDDING_CONTENT_PREFIX", None)
+
+RAG_EMBEDDING_PREFIX_FIELD_NAME = os.environ.get(
+    "RAG_EMBEDDING_PREFIX_FIELD_NAME", None
 )
 
 RAG_RERANKING_MODEL = PersistentConfig(
